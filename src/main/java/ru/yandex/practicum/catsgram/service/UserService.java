@@ -17,28 +17,31 @@ public class UserService {
         return users.values();
     }
 
-    public User addUser(User user) {
+    public User createUser(User user) {
         if (user.getEmail() == null || user.getEmail().isBlank()) {
-            throw new InvalidEmailException("E-mail не может быть пустым.");
+            throw new InvalidEmailException("Адрес электронной почты не может быть пустым.");
         }
         if (users.containsKey(user.getEmail())) {
-            throw new UserAlreadyExistException(
-                    "Пользователь с e-mail: " + user.getEmail() + " сущестувует.");
+            throw new UserAlreadyExistException("Пользователь с электронной почтой " +
+                    user.getEmail() + " уже зарегистрирован.");
         }
         users.put(user.getEmail(), user);
         return user;
     }
 
-    public User updUser(User user) {
+    public User updateUser(User user) {
         if (user.getEmail() == null || user.getEmail().isBlank()) {
-            throw new InvalidEmailException("E-mail не может быть пустым.");
+            throw new InvalidEmailException("Адрес электронной почты не может быть пустым.");
         }
         users.put(user.getEmail(), user);
 
         return user;
     }
 
-    public User GetUserByEmail(String email) {
+    public User findUserByEmail(String email) {
+        if (email == null) {
+            return null;
+        }
         return users.get(email);
     }
 }
